@@ -1,5 +1,6 @@
 from PyQt4 import QtCore, QtGui
 
+
 class Error(QtGui.QDialog):
 
     def __init__(self, message):

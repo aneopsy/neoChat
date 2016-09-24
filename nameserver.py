@@ -4,7 +4,7 @@ import sys
 import json
 
 
-TCP_IP = '127.0.0.1' #socket.gethostbyname(socket.gethostname())
+TCP_IP = '127.0.0.1' # socket.gethostbyname(socket.gethostname())
 TCP_PORT = 5000
 BUFFER_SIZE = 1024
 
@@ -24,7 +24,8 @@ print "Server started on "+TCP_IP
 while 1:
     # Check if there are any readable sockets
     try:
-        readable_sockets, writeable_sockets, error_sockets = select.select(connections, [], [])
+        readable_sockets, writeable_sockets, error_sockets =
+        select.select(connections, [], [])
     except:
         print "Server killed"
         sys.exit(0)

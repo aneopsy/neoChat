@@ -2,6 +2,7 @@ from PyQt4 import QtCore, QtGui
 from userselect import UserSelect
 from error import Error
 
+
 class UserPref(QtGui.QDialog):
 
     def __init__(self):
@@ -12,8 +13,6 @@ class UserPref(QtGui.QDialog):
 
         self.layout = QtGui.QGridLayout(self)
 
-
-        #name input
         self.nameInput = QtGui.QLineEdit('', self)
         self.nameInput.setStyleSheet("font: 20pt")
         self.nameInput.setFixedHeight(30)
@@ -21,17 +20,17 @@ class UserPref(QtGui.QDialog):
         userLabel = QtGui.QLabel('Username:')
         self.layout.addWidget(userLabel, 0, 0)
 
-        #OK buton
         self.okbutton = QtGui.QPushButton(self)
         self.okbutton.setText("OK")
         self.okbutton.setMinimumWidth(50)
         self.okbutton.setMinimumHeight(45)
         self.layout.addWidget(self.okbutton, 1, 1)
-        QtCore.QObject.connect(self.okbutton, QtCore.SIGNAL("clicked()"), self.logOn)
+        QtCore.QObject.connect(self.okbutton, QtCore.SIGNAL("clicked()"),
+                               self.logOn)
 
-        #Crypto group
         self.cryptoBoxes = []
-        ciphers = ["CAMELLIA256-SHA", "AES256-SHA", "AES128-SHA", "DES-CBC3-SHA", "RC4-SHA"]
+        ciphers = ["CAMELLIA256-SHA", "AES256-SHA", "AES128-SHA",
+                   "DES-CBC3-SHA", "RC4-SHA"]
 
         self.cryptoGroup = QtGui.QGroupBox("Ciphers", self)
         self.cryptoGroup.setStyleSheet("font: 13pt")
@@ -52,7 +51,8 @@ class UserPref(QtGui.QDialog):
         for cipher in ciphers:
             cipherBox = QtGui.QCheckBox(cipher)
             self.cryptoBoxes.append(cipherBox)
-            self.cryptoGroupLayout.addWidget(cipherBox, ciphers.index(cipher), 1)
+            self.cryptoGroupLayout.addWidget(cipherBox,
+                                             ciphers.index(cipher), 1)
 
         self.cryptoGroup.setLayout(self.cryptoGroupLayout)
         self.layout.addWidget(self.cryptoGroup, 2, 0, 1, 2)
@@ -65,8 +65,8 @@ class UserPref(QtGui.QDialog):
         for checkBox in self.cryptoBoxes:
             if checkBox.isChecked():
                 name = str(checkBox.text())
-                ciphersList+=(name+":")
-                #if name == "ALL" or name == "HIGH" or name == "MEDIUM" or name == "LOW":
+                ciphersList += (name + ":")
+                # if name == "ALL" or name == "HIGH" or name == "MEDIUM" or name == "LOW":
                 #    break
         ciphersList = ciphersList.strip(':')
         if username != "" and username[0:7] != "REMOVE:" and ciphersList:
