@@ -30,8 +30,8 @@ class ChatServer(QtCore.QThread):
         certificate_file_name = "cert.pem"
         key_file_name = "key.key"
 
-        if os.path.isfile(certificate_file_name) and
-        os.path.isfile(key_file_name):
+        if (os.path.isfile(certificate_file_name) and
+           os.path.isfile(key_file_name)):
             return
         else:
             key = crypto.PKey()

@@ -46,8 +46,8 @@ class Chat(QtGui.QDialog):
             if errorcode == errno.ECONNREFUSED:
                 self.error = Error("Could not connect to " + self.contact)
             else:
-                messageError = "Error code " + str(e[0]) +
-                "\nYour cipher preferences might be incompatible."
+                messageError = ("Error code " + str(e[0]) +
+                "\nYour cipher preferences might be incompatible.")
                 self.error = Error(messageError)
             return False
 
