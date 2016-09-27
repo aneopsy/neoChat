@@ -1,7 +1,4 @@
-import socket
-import ssl
-import sys
-import errno
+import socket, ssl, sys, errno
 from PyQt4 import QtCore, QtGui
 from chatserver import ChatServer
 from message import Message
@@ -24,8 +21,7 @@ class Chat(QtGui.QDialog):
         except socket.error as e:
             errorcode = e[0]
             if errorcode == errno.EPIPE:
-                self.error = Error("Could not send message," +
-                                   " user has probably logged out")
+                self.error = Error("Could not send message, user has probably logged out")
                 try:
                     self.sslSocket.close()
                 except:
@@ -34,9 +30,9 @@ class Chat(QtGui.QDialog):
     def connect(self, ip):
         self.port = 5005
         client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sslSocket = ssl.wrap_socket(client,
-                                         ssl_version=ssl.PROTOCOL_TLSv1,
-                                         ciphers=self.ciphers)
+        self.sslSocket = ssl.wrap_socket(client, 
+                        ssl_version=ssl.PROTOCOL_TLSv1,
+                        ciphers=self.ciphers)
         self.sslSocket.settimeout(3)
         try:
             self.sslSocket.connect((ip, self.port))
@@ -44,11 +40,9 @@ class Chat(QtGui.QDialog):
         except socket.error as e:
             errorcode = e[0]
             if errorcode == errno.ECONNREFUSED:
-                self.error = Error("Could not connect to " + self.contact)
+                self.error = Error("Could not connect to "+ self.contact)
             else:
-                messageError = "Error code " + str(e[0]) +
-                "\nYour cipher preferences " +
-                " might be incompatible."
+                messageError = "Error code " + str(e[0]) + "\nYour cipher preferences might be incompatible."
                 self.error = Error(messageError)
             return False
 
@@ -59,8 +53,11 @@ class Chat(QtGui.QDialog):
 
     def refreshChatMessages(self):
         html = ""
+        #print self.chatLog
         self.messageText.clear()
         for post in self.chatLog:
+            #print post.getUser()
+            #print self.username
             if post.getUser() == self.username:
                 html += '<div align="right">'
                 html += post.getMessage()
@@ -85,8 +82,9 @@ class Chat(QtGui.QDialog):
         self.setWindowTitle("Chat with "+str(contact))
         self.resize(600, 400)
         self.layout = QtGui.QGridLayout(self)
-
+        
         if self.connect(ip):
+            #Text
             self.scrollArea = QtGui.QScrollArea(self)
             self.scrollArea.setWidgetResizable(True)
             self.scrollAreaWidgetContents = QtGui.QWidget()
@@ -95,14 +93,15 @@ class Chat(QtGui.QDialog):
             self.layout.addWidget(self.scrollArea, 0, 0, 1, 2)
             self.layout.addWidget(self.chatText, 0, 0, 1, 2)
 
+            #SendButton
             self.sendButton = QtGui.QPushButton(self)
             self.sendButton.setText("Send")
             self.sendButton.setMinimumWidth(50)
             self.sendButton.setMinimumHeight(45)
-            QtCore.QObject.connect(self.sendButton, QtCore.SIGNAL("clicked()"),
-                                   self.clickedButton)
+            QtCore.QObject.connect(self.sendButton, QtCore.SIGNAL("clicked()"), self.clickedButton)
             self.layout.addWidget(self.sendButton, 1, 1)
 
+            #messageText
             self.messageText = QtGui.QLineEdit(self)
             self.layout.addWidget(self.messageText, 1, 0)
 
