@@ -25,7 +25,7 @@ class UserPref(QtGui.QDialog):
         self.label.setObjectName(_fromUtf8("label"))
         self.layout.addWidget(self.label, 0, 0, 1, 2)
 
-        #name input
+        # name input
         self.nameInput = QtGui.QLineEdit(self)
         self.nameInput.setStyleSheet("font: 14pt")
         self.nameInput.setFixedHeight(30)
@@ -38,17 +38,19 @@ class UserPref(QtGui.QDialog):
 #        userLabel = QtGui.QLabel('Username:')
 #        self.layout.addWidget(userLabel, 0, 0)
 
-        #OK buton
+        # OK buton
         self.okbutton = QtGui.QPushButton(self)
         self.okbutton.setText("OK")
         self.okbutton.setMinimumWidth(40)
         self.okbutton.setMinimumHeight(40)
-        QtCore.QObject.connect(self.okbutton, QtCore.SIGNAL("clicked()"), self.logOn)
+        QtCore.QObject.connect(self.okbutton, QtCore.SIGNAL("clicked()"),
+                               self.logOn)
         self.layout.addWidget(self.okbutton, 1, 1)
 
-        #Crypto group
+        # Crypto group
         self.cryptoBoxes = []
-        ciphers = ["CAMELLIA256-SHA", "AES256-SHA", "AES128-SHA", "DES-CBC3-SHA", "RC4-SHA"]
+        ciphers = ["CAMELLIA256-SHA", "AES256-SHA", "AES128-SHA",
+                   "DES-CBC3-SHA", "RC4-SHA"]
 
         self.cryptoGroup = QtGui.QGroupBox("Ciphers", self)
         self.cryptoGroup.setStyleSheet("font: 12pt")
@@ -56,16 +58,16 @@ class UserPref(QtGui.QDialog):
         allBox = QtGui.QCheckBox("ALL")
         allBox.setChecked(True)
         allBox.setStyleSheet("QCheckBox {"
-                                "     background-color: #282C34;\n"
-                                "     color:#D7DAE0;\n"
-                                "}")
+                             "     background-color: #282C34;\n"
+                             "     color:#D7DAE0;\n"
+                             "}")
         self.cryptoBoxes.append(allBox)
         self.cryptoGroupLayout.addWidget(allBox, 0, 0)
         highBox = QtGui.QCheckBox("HIGH")
         highBox.setStyleSheet("QCheckBox {"
-                                "     background-color: #282C34;\n"
-                                "     color:#D7DAE0;\n"
-                                "}")
+                              "     background-color: #282C34;\n"
+                              "     color:#D7DAE0;\n"
+                              "}")
         self.cryptoBoxes.append(highBox)
         self.cryptoGroupLayout.addWidget(highBox, 1, 0)
         mediumBox = QtGui.QCheckBox("MEDIUM")
@@ -77,9 +79,9 @@ class UserPref(QtGui.QDialog):
         self.cryptoGroupLayout.addWidget(mediumBox, 2, 0)
         lowBox = QtGui.QCheckBox("LOW")
         lowBox.setStyleSheet("QCheckBox {"
-                                "     background-color: #282C34;\n"
-                                "     color:#D7DAE0;\n"
-                                "}")
+                             "     background-color: #282C34;\n"
+                             "     color:#D7DAE0;\n"
+                             "}")
         self.cryptoBoxes.append(lowBox)
         self.cryptoGroupLayout.addWidget(lowBox, 3, 0)
         for cipher in ciphers:
@@ -89,7 +91,8 @@ class UserPref(QtGui.QDialog):
                                     "     color:#D7DAE0;\n"
                                     "}")
             self.cryptoBoxes.append(cipherBox)
-            self.cryptoGroupLayout.addWidget(cipherBox, ciphers.index(cipher), 1)
+            self.cryptoGroupLayout.addWidget(cipherBox, ciphers.index(cipher),
+                                             1)
 
         self.cryptoGroup.setLayout(self.cryptoGroupLayout)
         self.layout.addWidget(self.cryptoGroup, 2, 0, 1, 2)
@@ -102,9 +105,7 @@ class UserPref(QtGui.QDialog):
         for checkBox in self.cryptoBoxes:
             if checkBox.isChecked():
                 name = str(checkBox.text())
-                ciphersList+=(name+":")
-                #if name == "ALL" or name == "HIGH" or name == "MEDIUM" or name == "LOW":
-                #    break
+                ciphersList += (name+":")
         ciphersList = ciphersList.strip(':')
         if username != "" and username[0:7] != "REMOVE:" and ciphersList:
             self.userswindow = UserSelect(username, ciphersList)

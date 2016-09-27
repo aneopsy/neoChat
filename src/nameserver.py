@@ -4,7 +4,8 @@ import sys
 import json
 
 
-TCP_IP = '127.0.0.1' #socket.gethostbyname(socket.gethostname())
+TCP_IP = '127.0.0.1'
+# socket.gethostbyname(socket.gethostname())
 TCP_PORT = 5000
 BUFFER_SIZE = 1024
 
